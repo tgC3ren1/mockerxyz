@@ -38,14 +38,8 @@
     }
 
     @keyframes fall {
-      0% {
-        transform: translateY(-10px);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh);
-        opacity: 0;
-      }
+      0% { transform: translateY(-10px); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
     }
 
     /* İçerik */
@@ -103,7 +97,29 @@
       font-style: italic;
     }
 
-    /* Animasyonlar */
+    /* Korku mesajı */
+    .scary-message {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.5);
+      font-size: 2em;
+      color: red;
+      text-shadow: 0 0 15px black, 0 0 30px red;
+      opacity: 0;
+      z-index: 10;
+      animation: none;
+      pointer-events: none;
+    }
+
+    @keyframes scaryAppear {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5) rotate(0deg); }
+      30% { opacity: 1; transform: translate(-50%, -50%) scale(1.2) rotate(-5deg); }
+      60% { transform: translate(-50%, -50%) scale(1) rotate(5deg); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8) rotate(0deg); }
+    }
+
+    /* Efektler */
     @keyframes shine {
       0% { background-position: 0% }
       100% { background-position: 200% }
@@ -126,12 +142,17 @@
     <h1>✨ MockerXYZ ✨</h1>
     <p>Topluluk merkezine hoş geldiniz.<br>
     Yakında resmi bağlantılar burada olacak.</p>
-    <a href="#" class="button">🚀 Yakında Aktif</a>
+    <a href="#" class="button" onclick="showScaryMessage()">🚀 Yakında Aktif</a>
   </div>
 
   <!-- Dip not -->
   <div class="note">
     Ona ödeyeceği bedeli göstereceğim; ama bu bedel, yalnızca bir başlangıç olacak.
+  </div>
+
+  <!-- Korku mesajı -->
+  <div class="scary-message" id="scaryMessage">
+    Bedelini ödeyeceğin her anı, sabırla izleyeceğim.
   </div>
 
   <script>
@@ -144,6 +165,13 @@
       star.style.animationDuration = (2 + Math.random() * 3) + "s";
       star.style.opacity = Math.random();
       stars.appendChild(star);
+    }
+
+    // Korku mesajı fonksiyonu
+    function showScaryMessage() {
+      const msg = document.getElementById("scaryMessage");
+      msg.style.animation = "scaryAppear 3s ease forwards";
+      setTimeout(() => { msg.style.animation = "none"; }, 3000);
     }
   </script>
 </body>
