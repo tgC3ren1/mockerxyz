@@ -10,12 +10,55 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      background: #0b0c10;
       color: white;
       font-family: 'Segoe UI', sans-serif;
       text-align: center;
       overflow: hidden;
+      flex-direction: column;
     }
+
+    /* Arka plan yıldızlar */
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden;
+      top: 0;
+      left: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
+    /* İçerik */
+    .content {
+      z-index: 2;
+      animation: breathe 4s ease-in-out infinite;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
     h1 {
       font-size: 3em;
       margin: 0;
@@ -24,11 +67,13 @@
       -webkit-text-fill-color: transparent;
       animation: shine 5s linear infinite;
     }
+
     p {
       font-size: 1.2em;
       margin-top: 10px;
       opacity: 0.9;
     }
+
     .button {
       margin-top: 20px;
       padding: 12px 25px;
@@ -41,23 +86,65 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       text-decoration: none;
       display: inline-block;
+      animation: pop 2s infinite;
     }
+
     .button:hover {
       transform: scale(1.1);
       box-shadow: 0 0 20px rgba(255, 75, 43, 0.7);
     }
+
+    /* Dip not */
+    .note {
+      z-index: 2;
+      font-size: 0.9em;
+      opacity: 0.6;
+      margin-bottom: 15px;
+      font-style: italic;
+    }
+
+    /* Animasyonlar */
     @keyframes shine {
       0% { background-position: 0% }
       100% { background-position: 200% }
     }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes pop {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
   </style>
 </head>
 <body>
-  <div>
+  <div class="stars" id="stars"></div>
+  <div class="content">
     <h1>✨ MockerXYZ ✨</h1>
     <p>Topluluk merkezine hoş geldiniz.<br>
     Yakında resmi bağlantılar burada olacak.</p>
     <a href="#" class="button">🚀 Yakında Aktif</a>
   </div>
+
+  <!-- Dip not -->
+  <div class="note">
+    Ona ödeyeceği bedeli göstereceğim; ama bu bedel, yalnızca bir başlangıç olacak.
+  </div>
+
+  <script>
+    // Dinamik yıldız üretimi
+    const stars = document.getElementById("stars");
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement("div");
+      star.className = "star";
+      star.style.left = Math.random() * window.innerWidth + "px";
+      star.style.animationDuration = (2 + Math.random() * 3) + "s";
+      star.style.opacity = Math.random();
+      stars.appendChild(star);
+    }
+  </script>
 </body>
 </html>
